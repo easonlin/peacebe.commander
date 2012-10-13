@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabGrouping"    
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+	<TableRow>
+        <TextView
+            android:id="@+id/labGrouping"    
+            android:layout_span="4"
+            android:textSize="20dip"
+            android:text="@string/labGroupingWaitPaint"
+            android:padding="3dip" />
+        <ProgressBar
+            android:id="@+id/pgbLoading"    
+	        android:layout_gravity="center_vertical|left"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:visibility="invisible"
+	        style="?android:attr/progressBarStyleSmall" />
+    </TableRow>
+		
+	<TableRow>
+        <ImageView
+            android:id="@+id/imgOk00"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />  
+        <ImageView    
+            android:id="@+id/imgOk01"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />
+        <TextView
+            android:id="@+id/txt00"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+        <TextView
+            android:id="@+id/txt01"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+    </TableRow>
+
+	<TableRow>
+        <ImageView
+            android:id="@+id/imgOk10"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />  
+        <ImageView    
+            android:id="@+id/imgOk11"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />
+        <TextView
+            android:id="@+id/txt10"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+        <TextView
+            android:id="@+id/txt11"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+    </TableRow>
+
+	<TableRow>
+        <ImageView
+            android:id="@+id/imgOk20"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />  
+        <ImageView    
+            android:id="@+id/imgOk21"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />
+        <TextView
+            android:id="@+id/txt20"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+        <TextView
+            android:id="@+id/txt21"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+    </TableRow>
+	
+	<TableRow>
+        <ImageView
+            android:id="@+id/imgOk30"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />  
+        <ImageView    
+            android:id="@+id/imgOk31"    
+            android:contentDescription="@string/imgOk"
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+        	android:visibility="invisible"
+        	android:src="@drawable/ok" />
+        <TextView
+            android:id="@+id/txt30"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+        <TextView
+            android:id="@+id/txt31"    
+            android:gravity="center_vertical|center_horizontal" 
+        	android:layout_width="128dip"   
+        	android:layout_height="96dip"
+            android:textSize="64dip"
+        	android:visibility="invisible" />
+    </TableRow>
+			
+    <TableRow>
+		<Button
+			android:id="@+id/btnNext"
+	        android:layout_span="4"
+			android:text="@string/btnNext"
+			android:layout_width="fill_parent" />
+    </TableRow>
+		    	    
+</TableLayout>

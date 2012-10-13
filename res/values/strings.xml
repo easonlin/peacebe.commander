@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- general -->
+    <string name="appName">PeaceBe Commander</string>
+    
+    <string name="idx1">1</string>
+    <string name="idx2">2</string>
+    <string name="idx3">3</string>
+    <string name="idx4">4</string>
+    
+    <string name="boy">Boys</string>
+    <string name="girl">Girls</string>
+    
+    <string name="btnNext">Next</string>
+    <string name="imgOk">OK</string>
+    
+    <!-- main -->
+    <string name="labMain">Task List</string>
+    <string name="btnGrouping">Grouping</string>
+    <string name="btnPhoto">Taking Landmark Photo</string>
+    <string name="btnPhotoTogether">Taking Photo Together</string>
+    <string name="btnSingingTogether">Singing Together</string>
+    
+    <!-- grouping -->
+    <string name="labGroupingWaitPaint">Wait for Users Painting</string>
+    <string name="labGroupingWaitVote">Wait for Users Voting</string>
+    <string name="labGroupingResult">Grouping Result</string>
+    
+</resources>
