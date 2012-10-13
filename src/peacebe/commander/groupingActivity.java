@@ -1,10 +1,11 @@
-package peacebe;
+package peacebe.commander;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import peacebe.commander.R;
+import peacebe.common.PeaceBeServer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
