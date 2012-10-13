@@ -26,10 +26,7 @@ public class GroupingActivity extends Activity {
 	private TextView[] txt = new TextView[8];
 	private Handler handler = new Handler();
 	private ProgressBar pgbLoading;
-	
-	//private PacebeServerClient netHelper = new PacebeServerClient();
-	//private PeaceBeServer.FakePeaceBeServer srv = new PeaceBeServer().getFake();
-	private PeaceBeServer srv = new PeaceBeServer();
+	private PeaceBeServer srv = PeaceBeServer.factoryGet();
 	private int mClientState = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -3,7 +3,6 @@ package peacebe.commander;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import peacebe.common.PeaceBeServer.FakePeaceBeServer;
 import peacebe.commander.R;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
@@ -20,8 +19,7 @@ public class CommanderActivity extends Activity {
 	private Button btnPhoto;
 	private Button btnPhotoTogether;
 	private Button btnSingingTogether;
-	//private PeaceBeServer.FakePeaceBeServer srv = new PeaceBeServer().getFake();
-	PeaceBeServer srv =  new PeaceBeServer();
+	private PeaceBeServer srv =  PeaceBeServer.factoryGet();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
