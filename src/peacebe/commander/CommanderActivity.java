@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class commanderActivity extends Activity {
+public class CommanderActivity extends Activity {
     /** Called when the activity is first created. */
 	private Button btnGrouping;
 	private Button btnPhoto;
@@ -36,7 +36,7 @@ public class commanderActivity extends Activity {
         {
 			public void onClick(View v) {
 				srv.StartGrouping();
-				Intent intent = new Intent(commanderActivity.this, groupingActivity.class);
+				Intent intent = new Intent(CommanderActivity.this, GroupingActivity.class);
 				intent.putExtra("state", "start");
 				startActivity(intent);
 			}
@@ -80,7 +80,7 @@ public class commanderActivity extends Activity {
 			e.printStackTrace();
 		}
 		if ("grouping".equals(app)){
-			Intent intent = new Intent(commanderActivity.this, groupingActivity.class);
+			Intent intent = new Intent(CommanderActivity.this, GroupingActivity.class);
 			intent.putExtra("state", state);
 			startActivity(intent);
 		}

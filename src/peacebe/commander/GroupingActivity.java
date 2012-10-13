@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-public class groupingActivity extends Activity {
+public class GroupingActivity extends Activity {
 	private TableLayout tabGrouping;
 	private TextView txtGrouping;
 	private Button btnNext;

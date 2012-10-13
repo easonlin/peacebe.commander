@@ -13,7 +13,7 @@
         android:icon="@drawable/peacebe"
         android:label="@string/appName" >
         <activity
-            android:name="peacebe.commanderActivity"
+            android:name=".CommanderActivity"
             android:label="@string/appName" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
 		<activity
-            android:name="peacebe.groupingActivity"
+            android:name=".GroupingActivity"
             android:label="@string/appName" >
         </activity>
         
