@@ -40,6 +40,17 @@ public class CommanderActivity extends Activity {
 			}
         });
 
+        btnGrouping = (Button)findViewById(R.id.btnProfiling);
+        btnGrouping.setOnClickListener(new OnClickListener()
+        {
+			public void onClick(View v) {
+				srv.StartProfiling();
+				Intent intent = new Intent(CommanderActivity.this, ProfilingActivity.class);
+				intent.putExtra("state", "start");
+				startActivity(intent);
+			}
+        });
+		
         btnPhoto = (Button)findViewById(R.id.btnPhoto);
         btnPhoto.setOnClickListener(new OnClickListener()
         {
@@ -79,6 +90,11 @@ public class CommanderActivity extends Activity {
 		}
 		if ("grouping".equals(app)){
 			Intent intent = new Intent(CommanderActivity.this, GroupingActivity.class);
+			intent.putExtra("state", state);
+			startActivity(intent);
+		}
+		if ("profiling".equals(app)){
+			Intent intent = new Intent(CommanderActivity.this, ProfilingActivity.class);
 			intent.putExtra("state", state);
 			startActivity(intent);
 		}

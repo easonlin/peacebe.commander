@@ -17,6 +17,7 @@
     
     <!-- main -->
     <string name="labMain">Task List</string>
+    <string name="btnProfiling">Profiling</string>
     <string name="btnGrouping">Grouping</string>
     <string name="btnPhoto">Taking Landmark Photo</string>
     <string name="btnPhotoTogether">Taking Photo Together</string>

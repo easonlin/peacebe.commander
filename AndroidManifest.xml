@@ -25,7 +25,10 @@
             android:name=".GroupingActivity"
             android:label="@string/appName" >
         </activity>
-        
+      	<activity
+            android:name=".ProfilingActivity"
+            android:label="@string/appName" >
+        </activity>  
     </application>
 
 </manifest>
