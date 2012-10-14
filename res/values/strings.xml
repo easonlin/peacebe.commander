@@ -27,4 +27,6 @@
     <string name="labGroupingWaitVote">Wait for Users Voting</string>
     <string name="labGroupingResult">Grouping Result</string>
     
+   <!-- 手动声明资源ID，类似于C++中的前置声明 --> 
+    <item type="id" name="buttonList"></item>  
 </resources>

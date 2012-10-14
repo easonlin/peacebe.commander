@@ -23,7 +23,7 @@ public class CommanderActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.task);
         
         JSONObject state = srv.getTeamState();
         changeViewByState(state);
