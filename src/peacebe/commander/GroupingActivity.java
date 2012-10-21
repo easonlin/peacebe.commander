@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import peacebe.commander.R;
+import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ public class GroupingActivity extends Activity {
 	private TextView[] txt = new TextView[8];
 	private Handler handler = new Handler();
 	private ProgressBar pgbLoading;
-	private PeaceBeServer srv = PeaceBeServer.factoryGet();
+	private IPeaceBeServer srv = PeaceBeServer.factoryGet();
 	private int mClientState = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {

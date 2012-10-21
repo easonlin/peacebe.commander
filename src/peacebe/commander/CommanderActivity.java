@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import peacebe.commander.R;
+import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,12 +20,21 @@ public class CommanderActivity extends Activity {
 	private Button btnPhoto;
 	private Button btnPhotoTogether;
 	private Button btnSingingTogether;
-	private PeaceBeServer srv =  PeaceBeServer.factoryGet();
+	private IPeaceBeServer srv =  PeaceBeServer.factoryGet();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task);
-        
+        String guid = "guid";
+        JSONObject tidObj = srv.getTeamId(guid);
+        String tid = null;
+		try {
+			tid = tidObj.getString("id");
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        srv.setTeam(tid);
         JSONObject state = srv.getTeamState();
         changeViewByState(state);
         
@@ -88,15 +98,16 @@ public class CommanderActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Intent intent = null;
 		if ("grouping".equals(app)){
-			Intent intent = new Intent(CommanderActivity.this, GroupingActivity.class);
-			intent.putExtra("state", state);
-			startActivity(intent);
+			intent = new Intent(CommanderActivity.this, GroupingActivity.class);
+		} else if ("profiling".equals(app)){
+			intent = new Intent(CommanderActivity.this, ProfilingActivity.class);
+		} else {
+			return;
 		}
-		if ("profiling".equals(app)){
-			Intent intent = new Intent(CommanderActivity.this, ProfilingActivity.class);
-			intent.putExtra("state", state);
-			startActivity(intent);
-		}
+		intent.putExtra("state", state);
+		intent.putExtra("tid", "1");
+		startActivity(intent);
 	}
 }

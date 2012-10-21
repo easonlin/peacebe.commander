@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
 import android.content.Context;
@@ -28,7 +29,7 @@ public class ProfilingActivity extends Activity {
 	private Handler handler = new Handler();
     private FrameLayout paintFrame;
     private ListView playerList;
-	private PeaceBeServer srv = PeaceBeServer.factoryGet();
+	private IPeaceBeServer srv = PeaceBeServer.factoryGet();
 	private ProgressBar pgbWaiting;
 	private Button nextButton;
     public class MySimpleArrayAdapter extends ArrayAdapter<Boolean> {
@@ -93,7 +94,7 @@ public class ProfilingActivity extends Activity {
         nextButton.setOnClickListener(new OnClickListener()
         {
         	public void onClick(View v) {
-				srv.StartFinish();
+				srv.StartProfilingFinish();
         		finish();
         	}	
         });	
