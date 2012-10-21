@@ -26,7 +26,7 @@ public class CommanderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task);
         String guid = "guid";
-        JSONObject tidObj = srv.getTeamId(guid);
+        JSONObject tidObj = srv.getTeamByGUID(guid);
         String tid = null;
 		try {
 			tid = tidObj.getString("id");
@@ -107,7 +107,7 @@ public class CommanderActivity extends Activity {
 			return;
 		}
 		intent.putExtra("state", state);
-		intent.putExtra("tid", "1");
+		intent.putExtra("id", "1");
 		startActivity(intent);
 	}
 }
