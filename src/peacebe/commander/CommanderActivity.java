@@ -1,13 +1,13 @@
 package peacebe.commander;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import peacebe.commander.R;
 import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,15 +20,18 @@ public class CommanderActivity extends Activity {
 	private Button btnPhoto;
 	private Button btnPhotoTogether;
 	private Button btnSingingTogether;
+    TeamHandler teamHandler;
 	private IPeaceBeServer srv =  PeaceBeServer.factoryGet();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task);
+		WifiManager wifi = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
+        teamHandler = new TeamHandler(wifi);
         String guid = "guid";
         JSONObject tidObj = srv.getTeamByGUID(guid);
         String tid = null;
-		try {
+        try {
 			tid = tidObj.getString("id");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -81,12 +84,12 @@ public class CommanderActivity extends Activity {
         btnSingingTogether.setOnClickListener(new OnClickListener()
         {
 			public void onClick(View v) {
+				teamHandler.invitePlayer("1");		
 				Toast.makeText(v.getContext(), "Not Implement Yet!!", Toast.LENGTH_SHORT).show();
 			}
         });
         
     }
-
 	private void changeViewByState(JSONObject result) {
 		// TODO Auto-generated method stub
 		String app = null;
@@ -109,5 +112,9 @@ public class CommanderActivity extends Activity {
 		intent.putExtra("state", state);
 		intent.putExtra("id", "1");
 		startActivity(intent);
+	}
+	@Override
+	public void onBackPressed() {
+		finish();
 	}
 }

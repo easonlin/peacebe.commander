@@ -72,7 +72,6 @@ public class GroupingActivity extends Activity {
 					srv.StartResult();
 					mClientState = 2;
 				} else {
-					srv.StartFinish();
 					finish();
 				}
 				setViewByState(mClientState);
@@ -90,7 +89,17 @@ public class GroupingActivity extends Activity {
 		setViewByState(mClientState);
 		handler.postDelayed(updateTimer, 200);
 	}
-
+	@Override
+	public void finish(){
+		Log.i("RUN","FINISH");
+		srv.StartFinish();
+		handler.removeCallbacks(updateTimer);
+		super.finish();
+	}
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 	private void setViewByState(int state) {
 		// TODO Auto-generated method stub
 		if (state == 1) {
@@ -160,7 +169,7 @@ public class GroupingActivity extends Activity {
 				String rgroup;
 				try {
 					lid = lhs.getString("id");
-					lgroup = lhs.getString("group");
+					lgroup = lhs.getString("boy");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -168,7 +177,7 @@ public class GroupingActivity extends Activity {
 				}
 				try {
 					rid = rhs.getString("id");
-					rgroup = lhs.getString("group");
+					rgroup = lhs.getString("boy");
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

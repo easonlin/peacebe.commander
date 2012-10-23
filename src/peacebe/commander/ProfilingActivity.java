@@ -105,7 +105,6 @@ public class ProfilingActivity extends Activity {
 		nextButton = (Button) findViewById(R.id.nextButton);
 		nextButton.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				srv.StartProfilingFinish();
 				finish();
 			}
 		});
@@ -114,7 +113,17 @@ public class ProfilingActivity extends Activity {
 		pgbWaiting.setVisibility(ProgressBar.GONE);
 		handler.postDelayed(updateTimer, 200);
 	}
-
+	@Override
+	public void finish(){
+		Log.i("RUN","FINISH Profiling");
+		srv.StartProfilingFinish();
+		handler.removeCallbacks(updateTimer);
+		super.finish();
+	}
+	@Override
+	public void onBackPressed() {
+		finish();
+	}
 	private Runnable updateTimer = new Runnable() {
 		public void run() {
 			Boolean[] OKs = { false, false, false, false, false, false, false,

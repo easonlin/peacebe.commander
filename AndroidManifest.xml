@@ -9,6 +9,7 @@
         android:targetSdkVersion="10" />
 
     <uses-permission android:name="android.permission.INTERNET" />    
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />  
     <application
         android:icon="@drawable/peacebe"
         android:label="@string/appName" >
