@@ -278,7 +278,8 @@ public class GroupingActivity extends Activity {
 		tabGrouping.setColumnStretchable(2, true);
 		tabGrouping.setColumnStretchable(3, true);
 		ArrayList<JSONObject> totalResult = SimpleSort(jsonTotalResult);
-		for (int location = 0; location < 8; location++) {
+		int len = totalResult.size();
+		for (int location = 0; location < len; location++) {
 
 			JSONObject player;
 			String voteResult = "";
