@@ -198,7 +198,8 @@ public class GroupingActivity extends Activity {
 		tabGrouping.setColumnStretchable(0, true);
 		tabGrouping.setColumnStretchable(1, true);
 		ArrayList<JSONObject> painted = SimpleSort(jsonPainted);
-		for (int location = 0; location < 8; location++) {
+		int len = painted.size();
+		for (int location = 0; location < len; location++) {
 			JSONObject player;
 			String paintState = null;
 			try {
@@ -246,23 +247,24 @@ public class GroupingActivity extends Activity {
 		tabGrouping.setColumnStretchable(2, true);
 		tabGrouping.setColumnStretchable(3, true);
 		ArrayList<JSONObject> totalResult = SimpleSort(jsonVoted);
-		for (int location = 0; location < 8; location++) {
+		int len = totalResult.size();
+		for (int location = 0; location < len; location++) {
 			JSONObject player;
-			int voteResult = -1;
+			String voteResult = null;
 			try {
 				player = totalResult.get(location);
-				voteResult = player.getInt("vote");
+				voteResult = player.getString("vote");
 
 			} catch (JSONException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.i("VOTE",location + " still not vote");
 				continue;
 			}
 			Log.i("paint", "i " + location + ", voteResult" + voteResult);
 			// imgOK[i].setVisibility(TextView.GONE);
 
-			if (voteResult > 0) {
-				txt[location].setText(Integer.toString(voteResult));
+			if (voteResult!=null) {
+				txt[location].setText(voteResult);
 				txt[location].setVisibility(TextView.VISIBLE);
 			} else {
 				txt[location].setVisibility(TextView.INVISIBLE);

@@ -23,6 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 public class ProfilingActivity extends Activity {
@@ -54,9 +55,9 @@ public class ProfilingActivity extends Activity {
 			View rowView = inflater.inflate(R.layout.profiling_item_simple,
 					parent, false);
 			TextView textView = (TextView) rowView
-					.findViewById(R.id.profiling_label);
+					.findViewById(R.id.profiling_boy);
 			ImageView imageView = (ImageView) rowView
-					.findViewById(R.id.profiling_image);
+					.findViewById(R.id.profiling_ok);
 			textView.setText(player_names[position]);
 			// Change the icon for Windows and iPhone
 			if (values[position]) {
@@ -108,6 +109,8 @@ public class ProfilingActivity extends Activity {
 				finish();
 			}
 		});
+		//ScrollView scrollView = new ScrollView(paintFrame.getContext());
+		//scrollView.addView(playerList);
 		paintFrame.addView(playerList);
 		nextButton.setVisibility(Button.VISIBLE);
 		pgbWaiting.setVisibility(ProgressBar.GONE);

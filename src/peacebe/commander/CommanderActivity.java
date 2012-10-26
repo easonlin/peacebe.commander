@@ -20,14 +20,14 @@ public class CommanderActivity extends Activity {
 	private Button btnPhoto;
 	private Button btnPhotoTogether;
 	private Button btnSingingTogether;
-    TeamHandler teamHandler;
+    //TeamHandler teamHandler;
 	private IPeaceBeServer srv =  PeaceBeServer.factoryGet();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task);
 		WifiManager wifi = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
-        teamHandler = new TeamHandler(wifi);
+        //teamHandler = new TeamHandler(wifi);
         String guid = "guid";
         JSONObject tidObj = srv.getTeamByGUID(guid);
         String tid = null;
@@ -84,7 +84,7 @@ public class CommanderActivity extends Activity {
         btnSingingTogether.setOnClickListener(new OnClickListener()
         {
 			public void onClick(View v) {
-				teamHandler.invitePlayer("1");		
+				//teamHandler.invitePlayer("1");		
 				Toast.makeText(v.getContext(), "Not Implement Yet!!", Toast.LENGTH_SHORT).show();
 			}
         });
@@ -94,12 +94,16 @@ public class CommanderActivity extends Activity {
 		// TODO Auto-generated method stub
 		String app = null;
 		String state = null;
+		if (result == null){
+			return;
+		}
 		try {
 			app = result.getString("app");
 			state = result.getString("state");
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return;
 		}
 		Intent intent = null;
 		if ("grouping".equals(app)){
