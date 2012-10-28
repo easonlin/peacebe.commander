@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import peacebe.common.Helper;
 import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
 import android.app.Activity;
@@ -33,41 +34,73 @@ public class ProfilingActivity extends Activity {
 	private IPeaceBeServer srv = PeaceBeServer.factoryGet();
 	private ProgressBar pgbWaiting;
 	private Button nextButton;
+	private boolean isUpdateRunnerClosed = false;
 
-	public class MySimpleArrayAdapter extends ArrayAdapter<Boolean> {
-		private final Context context;
-		private final Boolean[] values;
+	public class ProfilingArrayAdapter extends ArrayAdapter<JSONObject> {
+		private final JSONObject [] values;
 		/*private final String[] player_names = { "Player 1 (Male)",
 				"Player 2 (Male)", "Player 3 (Male)", "Player 4 (Male)",
 				"Player 5 (Female)", "Player 6 (Female)", "Player 7 (Female)",
-				"Player 8 (Female)" };*/
+				"Player 8 (Female)" };
 		private final String[] player_names = { "M",
 				"M", "M", "M",
 				"F", "F", "F",
-				"F" };
+				"F" };*/
 
-		public MySimpleArrayAdapter(Context context, Boolean[] values) {
-			super(context, R.layout.profiling_item_simple, values);
-			this.context = context;
-			this.values = values;
+		public ProfilingArrayAdapter(Context context, JSONObject [] profiled) {
+			super(context, R.layout.profiling_item_simple, profiled);
+			this.values = profiled;
 		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			LayoutInflater inflater = (LayoutInflater) context
+			LayoutInflater inflater = (LayoutInflater) parent.getContext()
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			View rowView = inflater.inflate(R.layout.profiling_item_simple,
 					parent, false);
-			TextView textView = (TextView) rowView
-					.findViewById(R.id.profiling_boy);
-			ImageView imageView = (ImageView) rowView
-					.findViewById(R.id.profiling_ok);
-			textView.setText(player_names[position]);
-			// Change the icon for Windows and iPhone
-			if (values[position]) {
-				imageView.setVisibility(ImageView.VISIBLE);
-			} else {
-				imageView.setVisibility(ImageView.INVISIBLE);
+			TextView textBoy = (TextView) rowView.findViewById(R.id.profiling_boy);
+			ImageView imageOk = (ImageView) rowView.findViewById(R.id.profiling_ok);
+
+			imageOk.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	String id = (String) v.getTag();
+                	srv.sendProfileVerifyOk(id);
+                }
+            });
+			ImageView imageDeny = (ImageView) rowView.findViewById(R.id.profiling_deny);
+			imageDeny.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                	String id = (String) v.getTag();
+                	srv.sendProfileVerifyDeny(id);
+                }
+            });
+			ImageView imagePhoto = (ImageView) rowView.findViewById(R.id.profiling_photo);
+			JSONObject player = values[position];
+			String profileState="";
+			try {
+				textBoy.setText(player.getString("boy"));
+				imageOk.setTag(player.getString("id"));
+				imageDeny.setTag(player.getString("id"));
+				profileState = player.getString("state");
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try{
+				imagePhoto.setImageBitmap(Helper.getBitmapFromString(player.getString("photo")));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			if ("w_profiling".equals(profileState)) {
+				imageOk.setVisibility(ImageView.INVISIBLE);
+				imageDeny.setVisibility(ImageView.VISIBLE);
+			} else if ("v_profiling".equals(profileState)) {
+				imageOk.setVisibility(ImageView.VISIBLE);
+				imageDeny.setVisibility(ImageView.VISIBLE);
+			} else{
+				imageOk.setVisibility(ImageView.INVISIBLE);
+				imageDeny.setVisibility(ImageView.INVISIBLE);
 			}
 			return rowView;
 		}
@@ -77,24 +110,25 @@ public class ProfilingActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		Bundle bundle = getIntent().getExtras();
+		srv.setTeam(bundle.getString("team"));
 		paintFrame = (FrameLayout) findViewById(R.id.paintFrame);
 		playerList = new ListView(paintFrame.getContext());
-
 		// First paramenter - Context
 		// Second parameter - Layout for the row
 		// Third parameter - ID of the TextView to which the data is written
 		// Forth - the Array of data
-		Boolean[] OKs = { false, false, false, false, false, false, false,
-				false };
-		MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(
-				paintFrame.getContext(), OKs);
+		JSONObject [] profiled = { };
+		ProfilingArrayAdapter profilingAdapter = new ProfilingArrayAdapter(
+				paintFrame.getContext(), profiled);
 
 		// Assign adapter to ListView
-		playerList.setAdapter(adapter);
+		playerList.setAdapter(profilingAdapter);
 		playerList.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				// TODO Auto-generated method stub
+				/*
 				Boolean[] OKs = { false, false, false, false, false, false,
 						false, false };
 				OKs[position] = true;
@@ -103,7 +137,7 @@ public class ProfilingActivity extends Activity {
 				ListView playerList = (ListView) parent;
 				// Assign adapter to ListView
 				playerList.setAdapter(adapter);
-
+				*/
 			}
 		});
 		pgbWaiting = (ProgressBar) findViewById(R.id.pgbWaiting);
@@ -125,44 +159,41 @@ public class ProfilingActivity extends Activity {
 		Log.i("RUN","FINISH Profiling");
 		srv.StartProfilingFinish();
 		handler.removeCallbacks(updateTimer);
+		isUpdateRunnerClosed = true;
 		super.finish();
 	}
 	@Override
 	public void onBackPressed() {
 		finish();
 	}
+	private int updateDelay=2000;
 	private Runnable updateTimer = new Runnable() {
 		public void run() {
-			Boolean[] OKs = { false, false, false, false, false, false, false,
-					false };
+			if (isUpdateRunnerClosed){
+				Log.i("run","isUpdateRunnerClosed, return.");
+				return;
+			}
 			JSONArray profiled = srv.getProfiled();
 			if (profiled == null){
-				handler.postDelayed(this, 800);
+				handler.postDelayed(this, updateDelay);
 				return;
 			}
 			int len = profiled.length();
-			for (int location = 0; location < len; location++) {
-				JSONObject player;
-				String profileState = null;
+			JSONObject [] arrayProfiled=new JSONObject [len];
+			for(int i = 0; i < len; i++){
 				try {
-					player = profiled.getJSONObject(location);
-					profileState = player.getString("state");
-					Log.i("paint", "i " + location + ",state " + profileState);
+					arrayProfiled[i]=profiled.getJSONObject(i);
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					continue;
-				}
-				// txt[i].setVisibility(TextView.GONE);
-				if ("w_profiling".equals(profileState)) {
-					OKs[location] = true;
+					arrayProfiled[i]=new JSONObject();
 				}
 			}
-			MySimpleArrayAdapter adapter = new MySimpleArrayAdapter(
-					paintFrame.getContext(), OKs);
+			ProfilingArrayAdapter adapter = new ProfilingArrayAdapter(
+					paintFrame.getContext(), arrayProfiled);
 			// Assign adapter to ListView
 			playerList.setAdapter(adapter);
-			handler.postDelayed(this, 800);
+			handler.postDelayed(this, updateDelay);
 		}
 	};
 }

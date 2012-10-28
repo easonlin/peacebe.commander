@@ -36,6 +36,7 @@ public class CommanderActivity extends Activity {
         mSetting = new Setting(this);
         mTid=mSetting.getTeam();
         srv.setTeam(mTid);
+        srv.registerTeam();
         JSONObject state = srv.getTeamState();
         changeViewByState(state);
         btnGrouping = (Button)findViewById(R.id.btnGrouping);
