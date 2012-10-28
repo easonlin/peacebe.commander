@@ -4,11 +4,14 @@ import org.json.JSONObject;
 import peacebe.commander.R;
 import peacebe.common.IPeaceBeServer;
 import peacebe.common.PeaceBeServer;
+import peacebe.common.Setting;
 import android.app.Activity;
-import android.content.Context;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -20,35 +23,32 @@ public class CommanderActivity extends Activity {
 	private Button btnPhoto;
 	private Button btnPhotoTogether;
 	private Button btnSingingTogether;
+	private Setting mSetting;
+	private String mTid;
     //TeamHandler teamHandler;
 	private IPeaceBeServer srv =  PeaceBeServer.factoryGet();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task);
-		WifiManager wifi = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
+		//WifiManager wifi = (WifiManager) getBaseContext().getSystemService(Context.WIFI_SERVICE);
         //teamHandler = new TeamHandler(wifi);
-        String guid = "guid";
-        JSONObject tidObj = srv.getTeamByGUID(guid);
-        String tid = null;
-        try {
-			tid = tidObj.getString("id");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        srv.setTeam(tid);
+        mSetting = new Setting(this);
+        mTid=mSetting.getTeam();
+        srv.setTeam(mTid);
         JSONObject state = srv.getTeamState();
         changeViewByState(state);
-        
-        
         btnGrouping = (Button)findViewById(R.id.btnGrouping);
         btnGrouping.setOnClickListener(new OnClickListener()
         {
 			public void onClick(View v) {
-				srv.StartGrouping();
+				JSONObject rc = srv.StartGrouping();
+				if (rc==null){
+					return;
+				}
 				Intent intent = new Intent(CommanderActivity.this, GroupingActivity.class);
 				intent.putExtra("state", "start");
+				intent.putExtra("team", mTid);
 				startActivity(intent);
 			}
         });
@@ -60,6 +60,7 @@ public class CommanderActivity extends Activity {
 				srv.StartProfiling();
 				Intent intent = new Intent(CommanderActivity.this, ProfilingActivity.class);
 				intent.putExtra("state", "start");
+				intent.putExtra("team", mTid);
 				startActivity(intent);
 			}
         });
@@ -114,11 +115,44 @@ public class CommanderActivity extends Activity {
 			return;
 		}
 		intent.putExtra("state", state);
-		intent.putExtra("id", "1");
+		intent.putExtra("team", mTid);
 		startActivity(intent);
 	}
 	@Override
 	public void onBackPressed() {
 		finish();
+	}
+	private static final int LEAVE_MENU_ID = Menu.FIRST + 1;
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		menu.clear();
+		menu.add(0, LEAVE_MENU_ID, 0, "Team").setShortcut('6', 'l');
+		return super.onPrepareOptionsMenu(menu);
+	}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case LEAVE_MENU_ID:
+			resetTeam();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+	public boolean resetTeam() {
+		final CharSequence[] items = { "Team1"};
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle("Pick a Team");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialogInterface, int item) {
+				Toast.makeText(getApplicationContext(), items[item],
+						Toast.LENGTH_SHORT).show();
+				int team = item + 1;
+				mTid = Integer.toString(team);
+				srv.setTeam(mTid);
+				return;
+			}
+		});
+		builder.show();
+		return false;
 	}
 }

@@ -23,8 +23,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
 import android.widget.TextView;
+
 
 public class ProfilingActivity extends Activity {
 	private Handler handler = new Handler();
@@ -37,10 +37,14 @@ public class ProfilingActivity extends Activity {
 	public class MySimpleArrayAdapter extends ArrayAdapter<Boolean> {
 		private final Context context;
 		private final Boolean[] values;
-		private final String[] player_names = { "Player 1 (Male)",
+		/*private final String[] player_names = { "Player 1 (Male)",
 				"Player 2 (Male)", "Player 3 (Male)", "Player 4 (Male)",
 				"Player 5 (Female)", "Player 6 (Female)", "Player 7 (Female)",
-				"Player 8 (Female)" };
+				"Player 8 (Female)" };*/
+		private final String[] player_names = { "M",
+				"M", "M", "M",
+				"F", "F", "F",
+				"F" };
 
 		public MySimpleArrayAdapter(Context context, Boolean[] values) {
 			super(context, R.layout.profiling_item_simple, values);
@@ -114,7 +118,7 @@ public class ProfilingActivity extends Activity {
 		paintFrame.addView(playerList);
 		nextButton.setVisibility(Button.VISIBLE);
 		pgbWaiting.setVisibility(ProgressBar.GONE);
-		handler.postDelayed(updateTimer, 200);
+		handler.postDelayed(updateTimer, 800);
 	}
 	@Override
 	public void finish(){
@@ -132,7 +136,12 @@ public class ProfilingActivity extends Activity {
 			Boolean[] OKs = { false, false, false, false, false, false, false,
 					false };
 			JSONArray profiled = srv.getProfiled();
-			for (int location = 0; location < 8; location++) {
+			if (profiled == null){
+				handler.postDelayed(this, 800);
+				return;
+			}
+			int len = profiled.length();
+			for (int location = 0; location < len; location++) {
 				JSONObject player;
 				String profileState = null;
 				try {
@@ -153,7 +162,7 @@ public class ProfilingActivity extends Activity {
 					paintFrame.getContext(), OKs);
 			// Assign adapter to ListView
 			playerList.setAdapter(adapter);
-			handler.postDelayed(this, 200);
+			handler.postDelayed(this, 800);
 		}
 	};
 }

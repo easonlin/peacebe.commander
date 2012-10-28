@@ -79,6 +79,7 @@ public class GroupingActivity extends Activity {
 		});
 		Bundle bundle = getIntent().getExtras();
 		String state = bundle.getString("state");
+		srv.setTeam(bundle.getString("team"));
 		if ("start".equals(state)) {
 			mClientState = 0;
 		} else if ("vote".equals(state)) {
@@ -126,15 +127,24 @@ public class GroupingActivity extends Activity {
 			switch (mClientState) {
 			case 0:
 				JSONArray painted = srv.getPainted();
+				if (painted == null){
+					break;
+				}
 				LoadIsPaint(painted);
 				break;
 			case 1:
 				JSONArray voted = srv.getVoted();
+				if (voted == null){
+					break;
+				}
 				LoadVote(voted);
 				break;
 			case 2:
 			default:
 				JSONArray totalResult = srv.getTotalResult();
+				if (totalResult == null){
+					break;
+				}
 				if (!isVoteResultShow) {
 					pgbLoading.setVisibility(ProgressBar.INVISIBLE);
 					LoadResult(totalResult);
